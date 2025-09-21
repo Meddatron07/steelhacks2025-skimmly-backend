@@ -1,0 +1,207 @@
+/* Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; overflow-x: hidden; }
+body { font-family: 'Arial', sans-serif; line-height: 1.6; }
+
+/* Hero with Background Image */
+.hero {
+  height: 100vh;
+  background: url('Untitled\ design\ \(2\).png') no-repeat center center/cover;
+  position: relative;
+  color: white;
+}
+
+/* Optional dark overlay for readability */
+.hero .overlay {
+  background: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar inside hero */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+}
+.Sign-In-button{
+  background: #023953;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-left: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: rgb(255, 255, 255);
+}
+.Sign-Up-button{
+  background: #00bfff;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-left: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: white;
+}
+.Sign-In-button:hover,
+.Sign-Up-button:hover{
+  opacity: 0.7;
+}
+.Sign-In-button:active,
+.Sign-Up-button:active{
+  opacity:0.4;
+}
+
+
+/* Hero content centered */
+.hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 1rem;
+}
+.hero-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+.Get-started-button {
+  background: #00bfff;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.Get-started-button:hover {
+  opacity: 0.7;
+}
+.Get-started-button:active{
+  opacity: 0.4;
+}
+
+/* Features section */
+.features {
+  padding: 3rem 1rem;
+  background: #fff;
+  text-align: center;
+}
+.features h2 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.card {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 220px;
+  text-align: center;
+}
+.card span {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.steps{
+  background:url(StepBackground.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 40px 0;
+  overflow: visible;
+}
+.row.left .text {
+  order: 1;
+  text-align: left;
+  display: flex;              
+  justify-content: center;  
+  align-items: center;      
+  text-align: center;
+}
+.row.left .image-box {
+  order: 2;
+}
+.row.right .image-box {
+  order: 1;
+}
+.row.right .text {
+  order: 2;
+  text-align: right;
+  display: flex;              
+  justify-content: center;    
+  align-items: center;        
+  text-align: center;
+}
+.text {
+  font-size: 70px;
+  font-weight: bold;
+  color: white;
+  flex: 1;
+  padding: 0 20px;
+  font-family: "Lilita One";
+}
+.lilita-one-regular {
+  font-family: "Lilita One", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+.image-box {
+  width: 400px;
+  height: 500px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  flex-shrink: 0;
+  align-self: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 5;
+  transform-origin: center center;
+}
+.tilt-left {
+  transform: rotate(-6deg);
+}
+.tilt-right {
+  transform: rotate(6deg);
+}
+.image-box img{
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
+  width: 100%;
+  height:100%;
+  overflow: hidden;
+}

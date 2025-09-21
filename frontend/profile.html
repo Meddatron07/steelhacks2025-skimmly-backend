@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skimmly - Profile</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Lilita+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header" onclick="changeCoverPhoto()">
+        <div class="header-content">
+            <h1 class="header-logo">Skimmly</h1>
+            <p class="header-tagline">Your Study Notes Hub</p>
+        </div>
+        <img id="coverImage" class="cover-image hidden" alt="Cover Photo">
+    </div>
+   
+    <div class="navigation-bar">
+        <div class="nav-container">
+            <a class="nav-item active" href="landing.html">Home</a>
+            <div class="nav-item" onclick="showSection('upload')">Upload</div>
+            <div class="nav-item" onclick="showSection('saved')">Saved</div>
+            <div class="nav-item" onclick="logout()">Log Out</div>
+        </div>
+    </div>
+
+    <div class="profile-section">
+        <div class="profile-pic-container">
+            <div class="profile-pic" onclick="changeProfilePic()">
+                <img id="profileImage" class="hidden" alt="Profile Picture">
+            </div>
+        </div>
+        <div class="profile-info">
+            <div class="profile-header">
+                <h2 id="displayName" class="profile-name">Enter your name</h2>
+                <button id="editProfileBtn" class="edit-profile-btn" onclick="toggleEditMode()">✏️ Edit Profile</button>
+            </div>
+
+            <div id="editableFields" class="editable-fields hidden">
+                <input type="text" id="userName" class="editable-name" placeholder="Enter your name" onblur="saveProfile()" onkeypress="handleNameEnter(event)">
+                <div class="profile-details">
+                    <input type="text" id="educationLevel" class="editable-field" placeholder="Education level (e.g. Bachelor's)" onblur="saveProfile()">
+                    <span>•</span>
+                    <input type="text" id="pronouns" class="editable-field" placeholder="Pronouns (e.g. she/her)" onblur="saveProfile()">
+                </div>
+                <div class="edit-actions">
+                    <button onclick="saveAndCloseEdit()" class="save-btn">Save</button>
+                    <button onclick="cancelEdit()" class="cancel-btn">Cancel</button>
+                </div>
+            </div>
+
+            <div id="displayFields" class="display-fields">
+                <div class="profile-details">
+                    <span id="displayEducation">Education not set</span>
+                    <span>•</span>
+                    <span id="displayPronouns">Pronouns not set</span>
+                </div>
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number" id="profileViews">0</div>
+                    <div class="stat-label">Profile views</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="followersCount">0</div>
+                    <div class="stat-label">Followers</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="followingCount">0</div>
+                    <div class="stat-label">Following</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="likesCount">0</div>
+                    <div class="stat-label">Likes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="upload-section">
+            <div class="upload-area" onclick="uploadNotes()" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                <div class="upload-icon">📚</div>
+                <h3>Upload Your Study Notes</h3>
+                <p>Drag and drop images of your notes here, or click to select files</p>
+                <small>Supports JPG, PNG, GIF files</small>
+            </div>
+        </div>
+
+        <div class="notes-grid" id="notesGrid">
+            <!-- Uploaded notes will appear here -->
+        </div>
+    </div>
+
+    <!-- Hidden file inputs -->
+    <input type="file" id="profilePicInput" class="hidden" accept="image/*" onchange="handleProfilePicChange(event)">
+    <input type="file" id="coverPhotoInput" class="hidden" accept="image/*" onchange="handleCoverPhotoChange(event)">
+    <input type="file" id="notesInput" class="hidden" accept="image/*" multiple onchange="handleNotesUpload(event)">
+
+    <!-- Scripts -->
+    <script src="profile.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQ6xASmHq4vyvDqXiOQq7PabBOj_WOmDc",
+            authDomain: "skimmly-c09f7.firebaseapp.com",
+            projectId: "skimmly-c09f7",
+            storageBucket: "skimmly-c09f7.firebasestorage.app",
+            messagingSenderId: "154158134317",
+            appId: "1:154158134317:web:751e47b3f9c65c98b2f4a4",
+            measurementId: "G-RZ1VLVC5JC"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Check if user is authenticated
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                // Not authenticated, redirect to landing page
+                window.location.href = "landing.html";
+            } else {
+                // User is authenticated, get ID token and load profile
+                try {
+                    const idToken = await user.getIdToken();
+                    localStorage.setItem('authToken', idToken);
+
+                    // Load user profile from backend
+                    await loadUserProfile();
+                } catch (error) {
+                    console.error('Error setting up authentication:', error);
+                    // Fallback to Firebase user data
+                    const nameField = document.getElementById('userName');
+                    if (nameField && user.displayName) {
+                        nameField.value = user.displayName;
+                    } else if (nameField && user.email) {
+                        nameField.value = user.email.split('@')[0];
+                    }
+                }
+            }
+        });
+
+        // Override the logout function to use Firebase
+        window.logout = async function() {
+            if (confirm('Are you sure you want to log out?')) {
+                try {
+                    await signOut(auth);
+                    window.location.href = "landing.html";
+                } catch (error) {
+                    console.error('Error signing out:', error);
+                    alert('Error signing out. Please try again.');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

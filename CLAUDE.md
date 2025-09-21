@@ -1,0 +1,2 @@
+- never run the server in the background
+- never prompt me to run the server, i will run it elsewhere

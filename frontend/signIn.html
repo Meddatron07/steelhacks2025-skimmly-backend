@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="signInStyle.css">
+</head>
+<body>
+    <div class="split-screen">
+        <div class="left">
+            <div class="form-container">
+                <h2>Log In</h2>
+                <input type="email" id="signInEmail" placeholder="Email" class="form-input">
+                <input type="password" id="signInPassword" placeholder="Password" class="form-input">
+                <button id="signInButton" class="form-button blue">Log In</button>
+                <div class="mt-4 text-center">
+                    <a href="#" id="forgotPassword" class="forgot-password">Forgot password?</a>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <h2>Welcome Back, Friend!</h2>
+            <a href="landing.html" class="nav-button">Back</a>
+        </div>
+    </div>
+   
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <p id="modalMessage"></p>
+            <button class="form-button blue" onclick="document.getElementById('messageModal').style.display='none'">OK</button>
+        </div>
+    </div>
+   
+    <script type="module" src="signInMe.js"></script>
+</body>
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skimmly - Explore</title>
+    <link rel="stylesheet" href="explore.css">
+    <script src="explore.js"></script>
+</head>
+<body>
+            <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="user-info" onclick="showPage('profile')">
+            <div class="user-avatar">
+                <div class="glasses"></div>
+            </div>
+            <span style="color: #2c5f7a; font-weight: bold;">User name</span>
+        </div>
+       
+        <div class="nav-item" onclick="showPage('explore')">Explore</div>
+        <div class="nav-item" onclick="showPage('upload')">Upload</div>
+        <div class="nav-item" onclick="showPage('saved')">Saved</div>
+        <div class="nav-item" onclick="logout()">Log Out</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Navigation Header -->
+        <div class="nav-header">
+            <div class="logo" onclick="showPage('explore')">Skimmly</div>
+            </div>
+        </div>
+
+        <!-- Explore Page -->
+        <div id="explore" class="page active">
+            <div class="header">
+            </div>
+
+            <div class="page-content">
+                <div class="posts-container">
+                <!-- Post 1 -->
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar" onclick="goToProfile('user1')">JD</div>
+                        <div class="post-info">
+                            <div class="post-author" onclick="goToProfile('user1')">John Doe</div>
+                            <div class="post-meta">Mathematics • 2 hours ago</div>
+                        </div>
+                    </div>
+                   
+                    <div class="post-content">
+                        <div class="post-image" onclick="openFile('slope-notes.pdf')">
+                            <div class="file-preview">
+                                <div class="file-icon">📄</div>
+                                <div class="file-name">Slope and Linear Functions - Complete Guide</div>
+                                <div class="file-type">PDF • 2.4 MB</div>
+                            </div>
+                        </div>
+                       
+                        <div class="post-description">
+                            Comprehensive study guide covering slope calculations, linear functions, and graphing techniques. Includes practice problems and step-by-step solutions.
+                        </div>
+                    </div>
+
+                    <div class="post-actions">
+                        <div class="action-group">
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                <span>❤️</span>
+                                <span class="like-count">245</span>
+                            </button>
+                            <button class="action-btn" onclick="openComments('post1')">
+                                <span>💬</span>
+                                <span>18</span>
+                            </button>
+                            <button class="action-btn">
+                                <span>📥</span>
+                                <span class="download-count">89</span>
+                            </button>
+                        </div>
+                        <button class="download-btn" onclick="downloadFile('slope-notes.pdf')">Download</button>
+                    </div>
+                </div>
+
+                <!-- Post 2 -->
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar" onclick="goToProfile('user2')" style="background: linear-gradient(45deg, #e74c3c, #f39c12)">SM</div>
+                        <div class="post-info">
+                            <div class="post-author" onclick="goToProfile('user2')">Sarah Miller</div>
+                            <div class="post-meta">Chemistry • 4 hours ago</div>
+                        </div>
+                    </div>
+                   
+                    <div class="post-content">
+                        <div class="post-image" onclick="openFile('chemistry-lab.jpg')">
+                            <div class="file-preview">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23f8f9fa'/%3E%3Ctext x='150' y='100' text-anchor='middle' font-family='Arial' font-size='16' fill='%23666'%3EChemistry Lab Setup%3C/text%3E%3Ccircle cx='100' cy='120' r='20' fill='none' stroke='%23007bff' stroke-width='2'/%3E%3Ccircle cx='200' cy='120' r='25' fill='none' stroke='%23dc3545' stroke-width='2'/%3E%3Cline x1='120' y1='120' x2='175' y2='120' stroke='%23666' stroke-width='2'/%3E%3C/svg%3E" alt="Chemistry Lab Setup">
+                            </div>
+                        </div>
+                       
+                        <div class="post-description">
+                            Laboratory setup diagram for organic chemistry experiments. Shows proper equipment arrangement and safety protocols for synthesis reactions.
+                        </div>
+                    </div>
+
+                    <div class="post-actions">
+                        <div class="action-group">
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                <span>❤️</span>
+                                <span class="like-count">156</span>
+                            </button>
+                            <button class="action-btn" onclick="openComments('post2')">
+                                <span>💬</span>
+                                <span>12</span>
+                            </button>
+                            <button class="action-btn">
+                                <span>📥</span>
+                                <span class="download-count">67</span>
+                            </button>
+                        </div>
+                        <button class="download-btn" onclick="downloadFile('chemistry-lab.jpg')">Download</button>
+                    </div>
+                </div>
+
+                <!-- Post 3 -->
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar" onclick="goToProfile('user3')" style="background: linear-gradient(45deg, #9b59b6, #3498db)">AL</div>
+                        <div class="post-info">
+                            <div class="post-author" onclick="goToProfile('user3')">Alex Lee</div>
+                            <div class="post-meta">History • 6 hours ago</div>
+                        </div>
+                    </div>
+                   
+                    <div class="post-content">
+                        <div class="post-image" onclick="openFile('wwii-timeline.pdf')">
+                            <div class="file-preview">
+                                <div class="file-icon">📋</div>
+                                <div class="file-name">World War II Timeline and Key Events</div>
+                                <div class="file-type">PDF • 1.8 MB</div>
+                            </div>
+                        </div>
+                       
+                        <div class="post-description">
+                            Detailed timeline of World War II from 1939-1945, including major battles, political events, and turning points. Perfect study guide for history exams.
+                        </div>
+                    </div>
+
+                    <div class="post-actions">
+                        <div class="action-group">
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                <span>❤️</span>
+                                <span class="like-count">198</span>
+                            </button>
+                            <button class="action-btn" onclick="openComments('post3')">
+                                <span>💬</span>
+                                <span>23</span>
+                            </button>
+                            <button class="action-btn">
+                                <span>📥</span>
+                                <span class="download-count">134</span>
+                            </button>
+                        </div>
+                        <button class="download-btn" onclick="downloadFile('wwii-timeline.pdf')">Download</button>
+                    </div>
+                </div>
+
+                <!-- Post 4 - Image Post -->
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar" onclick="goToProfile('user4')" style="background: linear-gradient(45deg, #27ae60, #2ecc71)">MJ</div>
+                        <div class="post-info">
+                            <div class="post-author" onclick="goToProfile('user4')">Maya Johnson</div>
+                            <div class="post-meta">Biology • 8 hours ago</div>
+                        </div>
+                    </div>
+                   
+                    <div class="post-content">
+                        <div class="post-image" onclick="openFile('cell-diagram.png')">
+                            <div class="file-preview">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23f0fff0'/%3E%3Cellipse cx='150' cy='100' rx='120' ry='80' fill='none' stroke='%2327ae60' stroke-width='3'/%3E%3Ccircle cx='150' cy='100' r='25' fill='%2327ae60' opacity='0.3'/%3E%3Ctext x='150' y='105' text-anchor='middle' font-family='Arial' font-size='12' fill='%23000'%3ENucleus%3C/text%3E%3Ccircle cx='100' cy='70' r='8' fill='%2327ae60'/%3E%3Ccircle cx='200' cy='130' r='6' fill='%2327ae60'/%3E%3Ctext x='150' y='25' text-anchor='middle' font-family='Arial' font-size='16' fill='%23000'%3EPlant Cell Structure%3C/text%3E%3C/svg%3E" alt="Plant Cell Diagram">
+                            </div>
+                        </div>
+                       
+                        <div class="post-description">
+                            Detailed plant cell diagram with all organelles labeled. High-resolution image perfect for biology studies and exam preparation.
+                        </div>
+                    </div>
+
+                    <div class="post-actions">
+                        <div class="action-group">
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                <span>❤️</span>
+                                <span class="like-count">289</span>
+                            </button>
+                            <button class="action-btn" onclick="openComments('post4')">
+                                <span>💬</span>
+                                <span>31</span>
+                            </button>
+                            <button class="action-btn">
+                                <span>📥</span>
+                                <span class="download-count">156</span>
+                            </button>
+                        </div>
+                        <button class="download-btn" onclick="downloadFile('cell-diagram.png')">Download</button>
+                    </div>
+                </div>
+
+                <!-- Post 5 - Physics PDF -->
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar" onclick="goToProfile('user5')" style="background: linear-gradient(45deg, #f39c12, #e67e22)">RG</div>
+                        <div class="post-info">
+                            <div class="post-author" onclick="goToProfile('user5')">Ryan Garcia</div>
+                            <div class="post-meta">Physics • 10 hours ago</div>
+                        </div>
+                    </div>
+                   
+                    <div class="post-content">
+                        <div class="post-image" onclick="openFile('newton-laws.pdf')">
+                            <div class="file-preview">
+                                <div class="file-icon">📚</div>
+                                <div class="file-name">Newton's Laws of Motion - Complete Guide</div>
+                                <div class="file-type">PDF • 3.1 MB</div>
+                            </div>
+                        </div>
+                       
+                        <div class="post-description">
+                            Comprehensive study guide covering all three of Newton's laws with real-world examples, formulas, and practice problems. Great for AP Physics prep!
+                        </div>
+                    </div>
+
+                    <div class="post-actions">
+                        <div class="action-group">
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                <span>❤️</span>
+                                <span class="like-count">412</span>
+                            </button>
+                            <button class="action-btn" onclick="openComments('post5')">
+                                <span>💬</span>
+                                <span>27</span>
+                            </button>
+                            <button class="action-btn">
+                                <span>📥</span>
+                                <span class="download-count">203</span>
+                            </button>
+                        </div>
+                        <button class="download-btn" onclick="downloadFile('newton-laws.pdf')">Download</button>
+                    </div>
+                </div>
+
+                <!-- Post 6 - Literature Image -->
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar" onclick="goToProfile('user6')" style="background: linear-gradient(45deg, #8e44ad, #9b59b6)">ET</div>
+                        <div class="post-info">
+                            <div class="post-author" onclick="goToProfile('user6')">Emily Thompson</div>
+                            <div class="post-meta">Literature • 12 hours ago</div>
+                        </div>
+                    </div>
+                   
+                    <div class="post-content">
+                        <div class="post-image" onclick="openFile('shakespeare-analysis.jpg')">
+                            <div class="file-preview">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23f8f6f0'/%3E%3Ctext x='150' y='40' text-anchor='middle' font-family='serif' font-size='18' fill='%234a4a4a'%3EShakespeare Analysis%3C/text%3E%3Crect x='50' y='60' width='200' height='2' fill='%238e44ad'/%3E%3Ctext x='60' y='85' font-family='serif' font-size='12' fill='%23666'%3EHamlet - Character Study%3C/text%3E%3Ctext x='60' y='105' font-family='serif' font-size='12' fill='%23666'%3EMacbeth - Themes%3C/text%3E%3Ctext x='60' y='125' font-family='serif' font-size='12' fill='%23666'%3ERomeo %26 Juliet - Symbolism%3C/text%3E%3Ctext x='60' y='145' font-family='serif' font-size='12' fill='%23666'%3EOthello - Literary Devices%3C/text%3E%3Ctext x='150' y='175' text-anchor='middle' font-family='serif' font-size='10' fill='%23999'%3EComprehensive Study Guide%3C/text%3E%3C/svg%3E" alt="Shakespeare Analysis">
+                            </div>
+                        </div>
+                       
+                        <div class="post-description">
+                            Complete Shakespeare analysis covering major plays including character studies, themes, and literary devices. Perfect for English literature courses.
+                        </div>
+                    </div>
+
+                    <div class="post-actions">
+                        <div class="action-group">
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                <span>❤️</span>
+                                <span class="like-count">178</span>
+                            </button>
+                            <button class="action-btn" onclick="openComments('post6')">
+                                <span>💬</span>
+                                <span>15</span>
+                            </button>
+                            <button class="action-btn">
+                                <span>📥</span>
+                                <span class="download-count">92</span>
+                            </button>
+                        </div>
+                        <button class="download-btn" onclick="downloadFile('shakespeare-analysis.jpg')">Download</button>
+                    </div>
+                </div>
+
+                <!-- Post 7 - Statistics PDF -->
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar" onclick="goToProfile('user7')" style="background: linear-gradient(45deg, #e74c3c, #c0392b)">DN</div>
+                        <div class="post-info">
+                            <div class="post-author" onclick="goToProfile('user7')">David Chen</div>
+                            <div class="post-meta">Statistics • 14 hours ago</div>
+                        </div>
+                    </div>
+                   
+                    <div class="post-content">
+                        <div class="post-image" onclick="openFile('statistics-formulas.pdf')">
+                            <div class="file-preview">
+                                <div class="file-icon">📊</div>
+                                <div class="file-name">Statistics Formula Sheet - Quick Reference</div>
+                                <div class="file-type">PDF • 1.2 MB</div>
+                            </div>
+                        </div>
+                       
+                        <div class="post-description">
+                            Essential statistics formulas and concepts in one convenient reference sheet. Covers descriptive statistics, probability, and hypothesis testing.
+                        </div>
+                    </div>
+
+                    <div class="post-actions">
+                        <div class="action-group">
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                <span>❤️</span>
+                                <span class="like-count">324</span>
+                            </button>
+                            <button class="action-btn" onclick="openComments('post7')">
+                                <span>💬</span>
+                                <span>22</span>
+                            </button>
+                            <button class="action-btn">
+                                <span>📥</span>
+                                <span class="download-count">187</span>
+                            </button>
+                        </div>
+                        <button class="download-btn" onclick="downloadFile('statistics-formulas.pdf')">Download</button>
+                    </div>
+                </div>
+
+                <!-- Post 8 - Spanish Language Image -->
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar" onclick="goToProfile('user8')" style="background: linear-gradient(45deg, #f39c12, #d35400)">CM</div>
+                        <div class="post-info">
+                            <div class="post-author" onclick="goToProfile('user8')">Carlos Martinez</div>
+                            <div class="post-meta">Spanish • 1 day ago</div>
+                        </div>
+                    </div>
+                   
+                    <div class="post-content">
+                        <div class="post-image" onclick="openFile('spanish-verbs.png')">
+                            <div class="file-preview">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23fff8e1'/%3E%3Ctext x='150' y='30' text-anchor='middle' font-family='Arial' font-size='18' font-weight='bold' fill='%23d35400'%3ESpanish Verb Conjugations%3C/text%3E%3Crect x='20' y='50' width='80' height='25' fill='%23f39c12' rx='3'/%3E%3Ctext x='60' y='67' text-anchor='middle' font-family='Arial' font-size='12' fill='white'%3EPresent%3C/text%3E%3Crect x='110' y='50' width='80' height='25' fill='%23e67e22' rx='3'/%3E%3Ctext x='150' y='67' text-anchor='middle' font-family='Arial' font-size='12' fill='white'%3EPast%3C/text%3E%3Crect x='200' y='50' width='80' height='25' fill='%23d35400' rx='3'/%3E%3Ctext x='240' y='67' text-anchor='middle' font-family='Arial' font-size='12' fill='white'%3EFuture%3C/text%3E%3Ctext x='30' y='100' font-family='Arial' font-size='12' fill='%23333'%3Ehablar - to speak%3C/text%3E%3Ctext x='30' y='120' font-family='Arial' font-size='12' fill='%23333'%3Ecomer - to eat%3C/text%3E%3Ctext x='30' y='140' font-family='Arial' font-size='12' fill='%23333'%3Evivir - to live%3C/text%3E%3Ctext x='150' y='180' text-anchor='middle' font-family='Arial' font-size='10' fill='%23888'%3E100 Most Common Verbs%3C/text%3E%3C/svg%3E" alt="Spanish Verb Conjugations">
+                            </div>
+                        </div>
+                       
+                        <div class="post-description">
+                            Comprehensive guide to Spanish verb conjugations covering present, past, and future tenses. Includes the 100 most commonly used verbs with examples.
+                        </div>
+                    </div>
+
+                    <div class="post-actions">
+                        <div class="action-group">
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                <span>❤️</span>
+                                <span class="like-count">267</span>
+                            </button>
+                            <button class="action-btn" onclick="openComments('post8')">
+                                <span>💬</span>
+                                <span>19</span>
+                            </button>
+                            <button class="action-btn">
+                                <span>📥</span>
+                                <span class="download-count">145</span>
+                            </button>
+                        </div>
+                        <button class="download-btn" onclick="downloadFile('spanish-verbs.png')">Download</button>
+                    </div>
+                </div>
+
+                <!-- Post 9 - Computer Science PDF -->
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar" onclick="goToProfile('user9')" style="background: linear-gradient(45deg, #3498db, #2980b9)">JK</div>
+                        <div class="post-info">
+                            <div class="post-author" onclick="goToProfile('user9')">Jessica Kim</div>
+                            <div class="post-meta">Computer Science • 1 day ago</div>
+                        </div>
+                    </div>
+                   
+                    <div class="post-content">
+                        <div class="post-image" onclick="openFile('data-structures.pdf')">
+                            <div class="file-preview">
+                                <div class="file-icon">💻</div>
+                                <div class="file-name">Data Structures and Algorithms Cheat Sheet</div>
+                                <div class="file-type">PDF • 2.8 MB</div>
+                            </div>
+                        </div>
+                       
+                        <div class="post-description">
+                            Essential data structures (arrays, linked lists, trees, graphs) and algorithms with time complexity analysis. Perfect for coding interviews and CS courses.
+                        </div>
+                    </div>
+
+                    <div class="post-actions">
+                        <div class="action-group">
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                <span>❤️</span>
+                                <span class="like-count">456</span>
+                            </button>
+                            <button class="action-btn" onclick="openComments('post9')">
+                                <span>💬</span>
+                                <span>38</span>
+                            </button>
+                            <button class="action-btn">
+                                <span>📥</span>
+                                <span class="download-count">298</span>
+                            </button>
+                        </div>
+                        <button class="download-btn" onclick="downloadFile('data-structures.pdf')">Download</button>
+                    </div>
+                </div>
+
+                <!-- Post 10 - Economics Image -->
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar" onclick="goToProfile('user10')" style="background: linear-gradient(45deg, #16a085, #1abc9c)">AB</div>
+                        <div class="post-info">
+                            <div class="post-author" onclick="goToProfile('user10')">Amanda Brown</div>
+                            <div class="post-meta">Economics • 1 day ago</div>
+                        </div>
+                    </div>
+                   
+                    <div class="post-content">
+                        <div class="post-image" onclick="openFile('supply-demand.jpg')">
+                            <div class="file-preview">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23f0fdfc'/%3E%3Ctext x='150' y='25' text-anchor='middle' font-family='Arial' font-size='16' font-weight='bold' fill='%2316a085'%3ESupply %26 Demand%3C/text%3E%3Cline x1='50' y1='170' x2='250' y2='170' stroke='%23333' stroke-width='2'/%3E%3Cline x1='50' y1='170' x2='50' y2='50' stroke='%23333' stroke-width='2'/%3E%3Cline x1='80' y1='150' x2='200' y2='80' stroke='%23e74c3c' stroke-width='3'/%3E%3Ctext x='210' y='75' font-family='Arial' font-size='12' fill='%23e74c3c'%3ESupply%3C/text%3E%3Cline x1='80' y1='80' x2='200' y2='150' stroke='%231abc9c' stroke-width='3'/%3E%3Ctext x='210' y='155' font-family='Arial' font-size='12' fill='%231abc9c'%3EDemand%3C/text%3E%3Ccircle cx='140' cy='115' r='4' fill='%23333'/%3E%3Ctext x='145' y='110' font-family='Arial' font-size='10' fill='%23333'%3EEquilibrium%3C/text%3E%3Ctext x='255' y='175' font-family='Arial' font-size='10' fill='%23666'%3EQuantity%3C/text%3E%3Ctext x='30' y='45' font-family='Arial' font-size='10' fill='%23666'%3EPrice%3C/text%3E%3C/svg%3E" alt="Supply and Demand Graph">
+                            </div>
+                        </div>
+                       
+                        <div class="post-description">
+                            Clear visualization of supply and demand curves with equilibrium point explanation. Great for understanding basic economic principles and market dynamics.
+                        </div>
+                    </div>
+
+                    <div class="post-actions">
+                        <div class="action-group">
+                            <button class="action-btn" onclick="toggleLike(this)">
+                                <span>❤️</span>
+                                <span class="like-count">195</span>
+                            </button>
+                            <button class="action-btn" onclick="openComments('post10')">
+                                <span>💬</span>
+                                <span>14</span>
+                            </button>
+                            <button class="action-btn">
+                                <span>📥</span>
+                                <span class="download-count">87</span>
+                            </button>
+                        </div>
+                        <button class="download-btn" onclick="downloadFile('supply-demand.jpg')">Download</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Page -->
+        <div id="upload" class="page upload-page">
+            <h1 class="page-title">Upload Your Study Materials</h1>
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <p style="font-size: 24px; margin-bottom: 20px;">📤</p>
+                <p>Click here or drag and drop your files</p>
+                <p style="font-size: 14px; color: #666; margin-top: 10px;">Supported formats: PDF, DOC, PPT, Images</p>
+            </div>
+            <input type="file" id="fileInput" style="display: none;" multiple onchange="handleFileUpload()">
+        </div>
+
+        <!-- Saved Page -->
+        <div id="saved" class="page saved-page">
+            <h1 class="page-title">Your Saved Downloads</h1>
+            <div class="saved-items">
+                <div class="saved-item">
+                    <h3>Slope Notes</h3>
+                    <p>Mathematics • Downloaded 2 days ago</p>
+                    <button onclick="downloadFile('slope-notes.pdf')" style="margin-top: 10px; padding: 5px 15px; background: #4a90e2; color: white; border: none; border-radius: 3px; cursor: pointer;">Download Again</button>
+                </div>
+                <div class="saved-item">
+                    <h3>Chemical Bonds</h3>
+                    <p>Chemistry • Downloaded 1 week ago</p>
+                    <button onclick="downloadFile('chemical-bonds.pdf')" style="margin-top: 10px; padding: 5px 15px; background: #4a90e2; color: white; border: none; border-radius: 3px; cursor: pointer;">Download Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profile" class="page profile-page">
+            <h1 class="page-title">Your Profile</h1>
+            <div style="margin: 30px 0;">
+                <div style="width: 100px; height: 100px; border-radius: 50%; background: #4a90e2; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: bold;">UN</div>
+                <h2>User Name</h2>
+                <p>Member since 2024</p>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 50px; margin: 30px 0;">
+                <div>
+                    <h3 style="color: #4a90e2;">15</h3>
+                    <p>Posts</p>
+                </div>
+                <div>
+                    <h3 style="color: #4a90e2;">342</h3>
+                    <p>Downloads</p>
+                </div>
+                <div>
+                    <h3 style="color: #4a90e2;">1.2k</h3>
+                    <p>Likes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comments Modal -->
+    <div id="commentsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Comments</h3>
+                <button class="close-btn" onclick="closeComments()">×</button>
+            </div>
+            <div class="comments-section" id="commentsSection">
+                <!-- Comments will be loaded here -->
+            </div>
+            <div class="comment-input-section">
+                <textarea class="comment-input" id="commentInput" placeholder="Write a comment..." rows="2"></textarea>
+                <button class="comment-submit" onclick="addComment()">Post</button>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+    </div>

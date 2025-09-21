@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skimmly - Home Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Lilita+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <section class="hero">
+        <div class="overlay">
+            <header class="navbar">
+                <h1 class="logo"> Skimmly </h1>
+                <nav>
+                    <button class="Sign-In-button">Sign In</button>
+                    <button class="Sign-Up-button">Sign Up</button>
+                </nav>
+            </header>
+
+            <div class="hero-content">
+                <h2 class="big-text">Elevate your studying experience</h2>
+                <p>Snap, upload, and share notes easily.</p>
+                <button class="Get-started-button">Get Started</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2>Why choose us?</h2>
+        <div class="cards">
+            <div class="card">
+                <span>📖</span>
+                <p>Organize and study smarter.</p>
+            </div>
+            <div class="card">
+                <span>📤</span>
+                <p>Upload and share your notes.</p>
+            </div>
+            <div class="card">
+                <span>⭐</span>
+                <p>Get feedback and likes from peers.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="steps">
+
+        <div class="row left">
+            <div class="text">1. Snap a picture of your note</div>
+            <div class="image-box tilt-left"> <img class="image-one" src="download.jpg"> </div>
+        </div>
+
+        <div class="row right">
+            <div class="image-box tilt-right"> <img class="image-two" src="Thema Bedürfnisse und Güter zur Befriedigung.jpg"> </div>
+        </div>
+
+        <div class="row left">
+            <div class="text">3. Get likes from friends </div>
+            <div class="image-box tilt-left"> <img class="image-three" src="Slope Reference Sheet _ Notes.jpg"></div>
+        </div>
+
+        <div class="row right">
+            <div class="image-box tilt-right"> <img class="image-four" src="download.jpg"> </div>
+            <div class="text">4. Download other’s notes</div>
+        </div>
+    </section>
+
+    <script type="module">
+        // Get references to the buttons
+        const signInButton = document.querySelector('.Sign-In-button');
+        const signUpButton = document.querySelector('.Sign-Up-button');
+        const getStartedButton = document.querySelector('.Get-started-button');
+
+        // Add event listeners to the buttons
+        if (signInButton) {
+            signInButton.addEventListener('click', () => {
+                window.location.href = "signIn.html";
+            });
+        }
+
+        if (signUpButton) {
+            signUpButton.addEventListener('click', () => {
+                window.location.href = "signUp.html";
+            });
+        }
+       
+        if (getStartedButton) {
+            getStartedButton.addEventListener('click', () => {
+                window.location.href = "signUp.html";
+            });
+        }
+    </script>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

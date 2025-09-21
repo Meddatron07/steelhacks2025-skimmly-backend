@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="signUpStyle.css">
+</head>
+<body>
+    <div class="split-screen">
+        <div class="right">
+            <h2>Hello, Welcome!</h2>
+            <a href="landing.html" class="nav-button">Back</a>
+        </div>
+        <div class="left">
+            <div class="form-container">
+                <h2>Create Account</h2>
+                <input type="text" id="signUpFirstName" placeholder="First name" class="form-input">
+                <input type="text" id="signUpLastName" placeholder="Last name" class="form-input">
+                <input type="email" id="signUpEmail" placeholder="Email" class="form-input">
+                <input type="password" id="signUpPassword" placeholder="Password" class="form-input">
+                <button id="signUpButton" class="form-button blue">Create Account</button>
+            </div>
+        </div>
+    </div>
+   
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <p id="modalMessage"></p>
+            <button class="form-button blue" onclick="document.getElementById('messageModal').style.display='none'">OK</button>
+        </div>
+    </div>
+   
+    <script type="module" src="signUpMe.js"></script>
+</body>
+</html>

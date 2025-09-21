@@ -1,0 +1,63 @@
+# AWS Credentials
+.aws_temp_creds
+*.pem
+*.p12
+*.key
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Virtual environments
+venv/
+env/
+.venv
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+
+# Node modules
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite3
+
+# AWS CLI directory (too large for git)
+aws/
+AWSCLIV2.msi
+awscliv2.zip
+ngrok.exe
+ngrok*.zip

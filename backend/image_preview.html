@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Preview System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls input, .controls select, .controls button {
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .controls input:focus, .controls select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #00cec9, #00b894);
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .image-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .image-preview:hover {
+            transform: scale(1.05);
+        }
+
+        .image-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .image-description {
+            color: #636e72;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            font-size: 0.9em;
+        }
+
+        .image-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .meta-info {
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        .pin-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #fd79a8;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .card-actions button {
+            flex: 1;
+            min-width: 80px;
+            padding: 8px 15px;
+            font-size: 0.85em;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 20px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #636e72;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .preview-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .preview-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+            
+            .image-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖼️ Image Preview System</h1>
+        
+        <div class="controls">
+            <button class="btn" onclick="showAddModal()">➕ Add Image</button>
+            <button class="btn btn-secondary" onclick="loadImages()">🔄 Refresh</button>
+            
+            <select id="filterSelect" onchange="loadImages()">
+                <option value="all">All Images</option>
+                <option value="pinned">📌 Pinned Only</option>
+                <option value="unpinned">Unpinned Only</option>
+            </select>
+            
+            <input type="text" id="searchInput" placeholder="🔍 Search images..." oninput="debounceSearch()">
+            
+            <select id="categoryFilter" onchange="loadImages()">
+                <option value="">All Categories</option>
+            </select>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Loading images...</p>
+        </div>
+
+        <div class="image-grid" id="imageGrid">
+            <!-- Images will be loaded here -->
+        </div>
+
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <h3>No Images Found</h3>
+            <p>Add some images to get started!</p>
+        </div>
+    </div>
+
+    <!-- Add Image Modal -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddModal()">&times;</span>
+            <h2>Add New Image</h2>
+            
+            <form id="addImageForm" onsubmit="saveImage(event)">
+                <div class="form-group">
+                    <label for="imageUrl">Image URL *</label>
+                    <input type="url" id="imageUrl" required placeholder="https://example.com/image.jpg">
+                </div>
+                
+                <div class="form-group">
+                    <label for="imageTitle">Title *</label>
+                    <input type="text" id="imageTitle" required placeholder="Enter image title">
+                </div>
+                
+                <div class="form-group">
+                    <label for="imageDescription">Description</label>
+                    <textarea id="imageDescription" placeholder="Enter image description (optional)"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="imageTags">Tags</label>
+                    <input type="text" id="imageTags" placeholder="tag1, tag2, tag3">
+                </div>
+                
+                <div class="form-group">
+                    <label for="imageCategory">Category</label>
+                    <input type="text" id="imageCategory" placeholder="e.g., photos, art, design">
+                </div>
+                
+                <button type="submit" class="btn">💾 Save Image</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="previewModal" class="preview-modal" onclick="closePreview()">
+        <div class="preview-content">
+            <img id="previewImage" class="preview-image" alt="Preview">
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUser = 'user123'; // In real app, get from authentication
+        let searchTimeout;
+        let images = [];
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            loadImages();
+            loadCategories();
+        });
+
+        // Debounced search function
+        function debounceSearch() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(loadImages, 300);
+        }
+
+        // Show add image modal
+        function showAddModal() {
+            document.getElementById('addModal').style.display = 'block';
+        }
+
+        // Close add image modal
+        function closeAddModal() {
+            document.getElementById('addModal').style.display = 'none';
+            document.getElementById('addImageForm').reset();
+        }
+
+        // Save new image
+        async function saveImage(event) {
+            event.preventDefault();
+            
+            const formData = {
+                user_id: currentUser,
+                image_url: document.getElementById('imageUrl').value,
+                title: document.getElementById('imageTitle').value,
+                description: document.getElementById('imageDescription').value || null,
+                tags: document.getElementById('imageTags').value.split(',').map(tag => tag.trim()).filter(tag => tag),
+                category: document.getElementById('imageCategory').value || null
+            };
+
+            try {
+                showLoading(true);
+                
+                // Simulate API call (replace with actual API endpoint)
+                const response = await fetch('/save-image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('✅ Image saved successfully!');
+                    closeAddModal();
+                    await loadImages();
+                    await loadCategories();
+                } else {
+                    alert('❌ Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error saving image:', error);
+                alert('❌ Error saving image: ' + error.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Load images from backend
+        async function loadImages() {
+            try {
+                showLoading(true);
+                
+                const filter = document.getElementById('filterSelect').value;
+                const search = document.getElementById('searchInput').value;
+                const category = document.getElementById('categoryFilter').value;
+                
+                let url = `/user-images/${currentUser}`;
+                const params = new URLSearchParams();
+                
+                if (filter === 'pinned') {
+                    params.append('pinned_only', 'true');
+                }
+                
+                if (category) {
+                    params.append('category', category);
+                }
+                
+                if (params.toString()) {
+                    url += '?' + params.toString();
+                }
+
+                // Simulate API response (replace with actual API call)
+                const response = await simulateApiResponse(url, filter, search, category);
+                
+                if (response.success) {
+                    images = response.images;
+                    displayImages(images, search, filter);
+                } else {
+                    console.error('Error loading images:', response.message);
+                    displayError();
+                }
+            } catch (error) {
+                console.error('Error loading images:', error);
+                displayError();
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Simulate API response (replace with actual backend calls)
+        async function simulateApiResponse(url, filter, search, category) {
+            // Simulate loading delay
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Sample data (replace with actual API call)
+            let sampleImages = [
+                {
+                    id: '1',
+                    title: 'Beautiful Sunset',
+                    description: 'A stunning sunset over the mountains',
+                    image_url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400',
+                    tags: ['sunset', 'mountains', 'nature'],
+                    category: 'photography',
+                    is_pinned: true,
+                    dimensions: '1920x1080',
+                    created_at: '2024-01-15T10:30:00'
+                },
+                {
+                    id: '2',
+                    title: 'Modern Architecture',
+                    description: 'Contemporary building design',
+                    image_url: 'https://images.unsplash.com/photo-1486718448742-163d73305c82?w=400',
+                    tags: ['architecture', 'modern', 'building'],
+                    category: 'architecture',
+                    is_pinned: false,
+                    dimensions: '1600x900',
+                    created_at: '2024-01-14T15:20:00'
+                },
+                {
+                    id: '3',
+                    title: 'Ocean Waves',
+                    description: 'Peaceful ocean scene',
+                    image_url: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=400',
+                    tags: ['ocean', 'waves', 'peaceful'],
+                    category: 'nature',
+                    is_pinned: true,
+                    dimensions: '2048x1365',
+                    created_at: '2024-01-13T09:15:00'
+                }
+            ];
+
+            // Apply filters
+            let filteredImages = sampleImages;
+
+            if (filter === 'pinned') {
+                filteredImages = filteredImages.filter(img => img.is_pinned);
+            } else if (filter === 'unpinned') {
+                filteredImages = filteredImages.filter(img => !img.is_pinned);
+            }
+
+            if (category) {
+                filteredImages = filteredImages.filter(img => img.category === category);
+            }
+
+            if (search) {
+                const searchLower = search.toLowerCase();
+                filteredImages = filteredImages.filter(img => 
+                    img.title.toLowerCase().includes(searchLower) ||
+                    (img.description && img.description.toLowerCase().includes(searchLower)) ||
+                    img.tags.some(tag => tag.toLowerCase().includes(searchLower))
+                );
+            }
+
+            return {
+                success: true,
+                images: filteredImages,
+                count: filteredImages.length
+            };
+        }
+
+        // Display images in grid
+        function displayImages(images, search, filter) {
+            const grid = document.getElementById('imageGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            grid.innerHTML = '';
+
+            if (images.length === 0) {
+                emptyState.style.display = 'block';
+                grid.style.display = 'none';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            grid.style.display = 'grid';
+
+            images.forEach(image => {
+                const imageCard = createImageCard(image);
+                grid.appendChild(imageCard);
+            });
+        }
+
+        // Create individual image card
+        function createImageCard(image) {
+            const card = document.createElement('div');
+            card.className = 'image-card';
+            
+            const pinBadge = image.is_pinned ? '<div class="pin-badge">📌 Pinned</div>' : '';
+            
+            card.innerHTML = `
+                ${pinBadge}
+                <img src="${image.image_url}" alt="${image.title}" class="image-preview" 
+                     onclick="showPreview('${image.image_url}', '${image.title}')"
+                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNmOGY5ZmEiLz48dGV4dCB4PSIxMDAiIHk9IjEwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iIGZpbGw9IiM2Yzc1N2QiPkltYWdlIEVycm9yPC90ZXh0Pjwvc3ZnPic">
+                
+                <h3 class="image-title">${image.title}</h3>
+                
+                ${image.description ? `<p class="image-description">${image.description}</p>` : ''}
+                
+                <div class="meta-info">
+                    📐 ${image.dimensions || 'Unknown'} • 📅 ${formatDate(image.created_at)}
+                </div>
+                
+                <div class="image-meta">
+                    ${image.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+                
+                <div class="card-actions">
+                    <button class="btn btn-secondary" onclick="togglePin('${image.id}', ${image.is_pinned})">
+                        ${image.is_pinned ? '📌 Unpin' : '📌 Pin'}
+                    </button>
+                    <button class="btn" onclick="viewFullImage('${image.image_url}')">
+                        👁️ View
+                    </button>
+                    <button class="btn btn-danger" onclick="deleteImage('${image.id}')">
+                        🗑️ Delete
+                    </button>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Show image preview modal
+        function showPreview(imageUrl, title) {
+            const modal = document.getElementById('previewModal');
+            const image = document.getElementById('previewImage');
+            
+            image.src = imageUrl;
+            image.alt = title;
+            modal.style.display = 'block';
+        }
+
+        // Close preview modal
+        function closePreview() {
+            document.getElementById('previewModal').style.display = 'none';
+        }
+
+        // Toggle pin status
+        async function togglePin(imageId, isPinned) {
+            try {
+                const endpoint = isPinned ? '/unpin-image' : '/pin-image';
+                
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 200));
+                
+                // Update local data
+                const image = images.find(img => img.id === imageId);
+                if (image) {
+                    image.is_pinned = !isPinned;
+                    if (!isPinned) {
+                        image.pinned_at = new Date().toISOString();
+                    } else {
+                        image.pinned_at = null;
+                    }
+                }
+                
+                await loadImages();
+                
+            } catch (error) {
+                console.error('Error toggling pin:', error);
+                alert('❌ Error updating pin status');
+            }
+        }
+
+        // View full image in new tab
+        function viewFullImage(imageUrl) {
+            window.open(imageUrl, '_blank');
+        }
+
+        // Delete image
+        async function deleteImage(imageId) {
+            if (!confirm('Are you sure you want to delete this image?')) {
+                return;
+            }
+
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 300));
+                
+                // Remove from local data
+                images = images.filter(img => img.id !== imageId);
+                
+                await loadImages();
+                alert('✅ Image deleted successfully');
+                
+            } catch (error) {
+                console.error('Error deleting image:', error);
+                alert('❌ Error deleting image');
+            }
+        }
+
+        // Load categories for filter
+        async function loadCategories() {
+            try {
+                // Simulate API call to get categories
+                const categories = ['photography', 'architecture', 'nature', 'art', 'design'];
+                
+                const categoryFilter = document.getElementById('categoryFilter');
+                
+                // Clear existing options (except "All Categories")
+                while (categoryFilter.children.length > 1) {
+                    categoryFilter.removeChild(categoryFilter.lastChild);
+                }
+                
+                // Add category options
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category;
+                    option.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+                    categoryFilter.appendChild(option);
+                });
+                
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+
+        // Show/hide loading spinner
+        function showLoading(show) {
+            const loading = document.getElementById('loading');
+            const grid = document.getElementById('imageGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (show) {
+                loading.style.display = 'block';
+                grid.style.display = 'none';
+                emptyState.style.display = 'none';
+            } else {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Display error state
+        function displayError() {
+            const grid = document.getElementById('imageGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            grid.style.display = 'none';
+            emptyState.style.display = 'block';
+            emptyState.innerHTML = `
+                <h3>⚠️ Error Loading Images</h3>
+                <p>Please try again later or check your connection.</p>
+                <button class="btn" onclick="loadImages()">🔄 Retry</button>
+            `;
+        }
+
+        // Format date for display
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const addModal = document.getElementById('addModal');
+            const previewModal = document.getElementById('previewModal');
+            
+            if (event.target === addModal) {
+                closeAddModal();
+            }
+            if (event.target === previewModal) {
+                closePreview();
+            }
+        }
+
+        // Handle escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeAddModal();
+                closePreview();
+            }
+        });
+    </script>
+</body>
+</html>
