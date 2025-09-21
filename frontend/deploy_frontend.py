@@ -9,10 +9,10 @@ import os
 import mimetypes
 from pathlib import Path
 
-# AWS Configuration
-AWS_ACCESS_KEY_ID = "AKIAQX3CDY3P2AK7XMSW"
-AWS_SECRET_ACCESS_KEY = "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"
-AWS_REGION = "us-east-2"
+# AWS Configuration - Use environment variables or AWS credentials file
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_REGION = os.getenv('AWS_REGION', 'us-east-2')
 FRONTEND_BUCKET_NAME = "steelhacks2025-frontend"  # Separate bucket for frontend
 
 def create_s3_client():
